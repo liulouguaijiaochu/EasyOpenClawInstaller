@@ -1,0 +1,63 @@
+name: Build OpenClaw Installer
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.0'
+    
+    - name: Show Xcode version
+      run: xcodebuild -version
+    
+    - name: Build OpenClaw Installer
+      run: |
+        chmod +x build.sh
+        ./build.sh
+    
+    - name: Upload DMG artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: OpenClaw-Installer-DMG
+        path: build/OpenClaw-Installer-*.dmg
+        if-no-files-found: error
+    
+    - name: Upload PKG artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: OpenClaw-Installer-PKG
+        path: build/OpenClaw-Installer-*.pkg
+        if-no-files-found: warn
+    
+    - name: Upload App artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: OpenClaw-Installer-App
+        path: build/OpenClawInstaller.xcarchive/Products/Applications/OpenClawInstaller.app
+        if-no-files-found: error
+    
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          build/OpenClaw-Installer-*.dmg
+          build/OpenClaw-Installer-*.pkg
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
