@@ -24,7 +24,8 @@ jobs:
     - name: Show Xcode version
       run: |
         xcodebuild -version
-        xcodebuild -showsdks
+        echo "--- Project Info ---"
+        xcodebuild -list -project OpenClawInstaller.xcodeproj || true
     
     - name: Build OpenClaw Installer
       run: |
@@ -49,7 +50,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: OpenClaw-Installer-App
-        path: build/dmg_temp/OpenClawInstaller.app
+        path: build/Release/OpenClawInstaller.app
         if-no-files-found: warn
     
     - name: Create Release

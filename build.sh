@@ -16,24 +16,27 @@ rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 
 echo "Building OpenClaw Installer..."
+
+# 使用 -target 而不是 -scheme，并指定 SYMROOT 来设置构建输出目录
 xcodebuild \
     -project "$APP_NAME.xcodeproj" \
-    -scheme "$APP_NAME" \
+    -target "$APP_NAME" \
     -configuration Release \
-    -destination "platform=macOS" \
-    -derivedDataPath "$BUILD_DIR/DerivedData" \
+    -sdk macosx \
+    SYMROOT="$BUILD_DIR" \
     build \
     CODE_SIGN_IDENTITY="-" \
     CODE_SIGNING_REQUIRED=NO \
-    CODE_SIGNING_ALLOWED=NO \
-    ENABLE_BITCODE=NO
+    CODE_SIGNING_ALLOWED=NO
 
 echo "Build successful!"
 
-BUILT_APP_PATH="$BUILD_DIR/DerivedData/Build/Products/Release/$APP_NAME.app"
+# 查找构建产物
+BUILT_APP_PATH="$BUILD_DIR/Release/$APP_NAME.app"
 
 if [ ! -d "$BUILT_APP_PATH" ]; then
-    echo "Error: Built app not found"
+    echo "Error: Built app not found at $BUILT_APP_PATH"
+    echo "Searching for built app..."
     find "$BUILD_DIR" -name "$APP_NAME.app" -type d 2>/dev/null || true
     exit 1
 fi
