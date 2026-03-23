@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # OpenClaw macOS Installer
 
 A beautiful, native macOS graphical installer for [OpenClaw](https://github.com/openclaw/openclaw) - your personal AI assistant.
@@ -185,3 +186,6 @@ Contributions are welcome! Please:
 ---
 
 **Note**: This is an unofficial installer for OpenClaw. OpenClaw is a trademark of its respective owners.
+=======
+# EasyOpenClawInstaller
+>>>>>>> b775f0a211ee7c136e707afff3ad9a61c31922a6
