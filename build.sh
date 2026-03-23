@@ -53,6 +53,7 @@ xcodebuild \
     -target "$APP_NAME" \
     -configuration Release \
     -derivedDataPath "$DERIVED_DATA_DIR" \
+    -archivePath "$ARCHIVE_PATH" \
     archive \
     CODE_SIGN_IDENTITY="-" \
     CODE_SIGNING_REQUIRED=NO \
