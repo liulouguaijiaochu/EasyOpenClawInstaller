@@ -46,15 +46,18 @@ echo -e "${YELLOW}Cleaning previous builds...${NC}"
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 
-# Build the project
+# Generate scheme if not exists
+echo -e "${YELLOW}Generating Xcode scheme...${NC}"
+xcodebuild -project "$APP_NAME.xcodeproj" -target "$APP_NAME" -configuration Release -scheme "$APP_NAME" clean build 2>/dev/null || true
+
+# Build the project using build instead of archive
 echo -e "${YELLOW}Building OpenClaw Installer...${NC}"
 xcodebuild \
     -project "$APP_NAME.xcodeproj" \
     -target "$APP_NAME" \
     -configuration Release \
     -derivedDataPath "$DERIVED_DATA_DIR" \
-    -archivePath "$ARCHIVE_PATH" \
-    archive \
+    build \
     CODE_SIGN_IDENTITY="-" \
     CODE_SIGNING_REQUIRED=NO \
     CODE_SIGNING_ALLOWED=NO
@@ -67,10 +70,22 @@ fi
 echo -e "${GREEN}Build successful!${NC}"
 
 # Find the built app
-BUILT_APP_PATH="$ARCHIVE_PATH/Products/Applications/$APP_NAME.app"
+BUILT_APP_PATH="$DERIVED_DATA_DIR/Build/Products/Release/$APP_NAME.app"
 
 if [ ! -d "$BUILT_APP_PATH" ]; then
-    echo -e "${RED}Error: Built app not found at $BUILT_APP_PATH${NC}"
+    # Try alternative path
+    BUILT_APP_PATH="$DERIVED_DATA_DIR/Build/Intermediates.noindex/ArchiveIntermediates/$APP_NAME/InstallationBuildProductsLocation/Applications/$APP_NAME.app"
+fi
+
+if [ ! -d "$BUILT_APP_PATH" ]; then
+    # Try another path
+    BUILT_APP_PATH=$(find "$DERIVED_DATA_DIR" -name "$APP_NAME.app" -type d 2>/dev/null | head -1)
+fi
+
+if [ -z "$BUILT_APP_PATH" ] || [ ! -d "$BUILT_APP_PATH" ]; then
+    echo -e "${RED}Error: Built app not found${NC}"
+    echo -e "${YELLOW}Searching in $DERIVED_DATA_DIR...${NC}"
+    find "$DERIVED_DATA_DIR" -name "*.app" -type d 2>/dev/null || true
     exit 1
 fi
 
