@@ -5,8 +5,6 @@ APP_NAME="OpenClawInstaller"
 BUNDLE_ID="com.openclaw.installer"
 VERSION="1.0.0"
 BUILD_DIR="build"
-DERIVED_DATA_DIR="$BUILD_DIR/DerivedData"
-ARCHIVE_PATH="$BUILD_DIR/$APP_NAME.xcarchive"
 DMG_NAME="OpenClaw-Installer-$VERSION.dmg"
 VOLUME_NAME="OpenClaw Installer"
 
@@ -22,16 +20,24 @@ xcodebuild \
     -project "$APP_NAME.xcodeproj" \
     -scheme "$APP_NAME" \
     -configuration Release \
-    -derivedDataPath "$DERIVED_DATA_DIR" \
-    -archivePath "$ARCHIVE_PATH" \
-    archive \
+    -destination "platform=macOS" \
+    -derivedDataPath "$BUILD_DIR/DerivedData" \
+    build \
     CODE_SIGN_IDENTITY="-" \
     CODE_SIGNING_REQUIRED=NO \
-    CODE_SIGNING_ALLOWED=NO
+    CODE_SIGNING_ALLOWED=NO \
+    ENABLE_BITCODE=NO
 
 echo "Build successful!"
 
-BUILT_APP_PATH="$ARCHIVE_PATH/Products/Applications/$APP_NAME.app"
+BUILT_APP_PATH="$BUILD_DIR/DerivedData/Build/Products/Release/$APP_NAME.app"
+
+if [ ! -d "$BUILT_APP_PATH" ]; then
+    echo "Error: Built app not found"
+    find "$BUILD_DIR" -name "$APP_NAME.app" -type d 2>/dev/null || true
+    exit 1
+fi
+
 echo "Built app: $BUILT_APP_PATH"
 
 echo "Creating DMG..."
@@ -42,7 +48,12 @@ ln -s /Applications "$DMG_TEMP_DIR/Applications"
 hdiutil create -volname "$VOLUME_NAME" -srcfolder "$DMG_TEMP_DIR" -ov -format UDZO "$BUILD_DIR/$DMG_NAME"
 
 echo "Creating PKG..."
-pkgbuild --component "$BUILT_APP_PATH" --install-location /Applications --identifier "$BUNDLE_ID" --version "$VERSION" "$BUILD_DIR/OpenClaw-Installer-$VERSION.pkg" || true
+pkgbuild \
+    --component "$BUILT_APP_PATH" \
+    --install-location /Applications \
+    --identifier "$BUNDLE_ID" \
+    --version "$VERSION" \
+    "$BUILD_DIR/OpenClaw-Installer-$VERSION.pkg" || true
 
 echo "========================================"
 echo "  Build Complete!"
