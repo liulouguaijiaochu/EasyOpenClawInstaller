@@ -50,7 +50,7 @@ mkdir -p "$BUILD_DIR"
 echo -e "${YELLOW}Building OpenClaw Installer...${NC}"
 xcodebuild \
     -project "$APP_NAME.xcodeproj" \
-    -scheme "$APP_NAME" \
+    -target "$APP_NAME" \
     -configuration Release \
     -derivedDataPath "$DERIVED_DATA_DIR" \
     -archivePath "$ARCHIVE_PATH" \
