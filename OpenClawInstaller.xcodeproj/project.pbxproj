@@ -104,9 +104,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A1000000 /* OpenClawInstaller */ = {
+		A2000000 /* OpenClawInstaller */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1000020 /* Build configuration list for PBXNativeTarget "OpenClawInstaller" */;
+			buildConfigurationList = A2000020 /* Build configuration list for PBXNativeTarget "OpenClawInstaller" */;
 			buildPhases = (
 				A0FFFFFB /* Sources */,
 				A0FFFFFC /* Frameworks */,
@@ -131,7 +131,7 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
-					A1000000 = {
+					A2000000 = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
@@ -149,7 +149,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A1000000 /* OpenClawInstaller */,
+				A2000000 /* OpenClawInstaller */,
 			);
 		};
 /* End PBXProject section */
@@ -307,7 +307,7 @@
 			};
 			name = Release;
 		};
-		A1000022 /* Debug */ = {
+		A2000022 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -334,7 +334,7 @@
 			};
 			name = Debug;
 		};
-		A1000023 /* Release */ = {
+		A2000023 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -373,11 +373,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1000020 /* Build configuration list for PBXNativeTarget "OpenClawInstaller" */ = {
+		A2000020 /* Build configuration list for PBXNativeTarget "OpenClawInstaller" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A1000022 /* Debug */,
-				A1000023 /* Release */,
+				A2000022 /* Debug */,
+				A2000023 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
