@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A0FFFFFF /* OpenClawInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenClawInstaller.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0FFFFFF /* OpenClawInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenClawInstaller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000000 /* OpenClawInstallerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClawInstallerApp.swift; sourceTree = "<group>"; };
 		A1000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A1000004 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
@@ -65,7 +65,7 @@
 		A0FFFFFF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A0FFFFFF /* OpenClawInstaller.app */,
+				B0FFFFFF /* OpenClawInstaller.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,7 +118,7 @@
 			);
 			name = OpenClawInstaller;
 			productName = OpenClawInstaller;
-			productReference = A0FFFFFF /* OpenClawInstaller.app */;
+			productReference = B0FFFFFF /* OpenClawInstaller.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
